@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>数量加减示例-初始化从1开始</title>
+    <script src="http://libs.baidu.com/jquery/1.10.2/jquery.js"></script>
+    <style>
+        * {margin:0;padding:0;box-sizing:border-box;}
+        .numOp {height: 50px;line-height: 50px;overflow:hidden;zoom:1;}
+        .numOp > * {float:left;line-height:50px;display:inline-block;vertical-align: middle;}
+        .numOp > a {height: 100%;width:50px;text-align: center;text-decoration:none;font-weight:bold;font-family:'微软雅黑';font-size:24px;color:#999;transition:all 0.5s;}
+        .numOp > a:hover {color:#000;}
+        .numOp > input {height:50px;width:85px;padding:0 5px;border:1px solid #ddd;}
+    </style>
+</head>
+<body>
+    <div class="numOp">
+        <a class="minus" onclick="minusBtn(this)" href="javascript:void(0);">-</a>
+        <input onfocus="focusCheck(this)" onblur="blurCheck(this)" class="inputValue" type="text" value="1" />
+        <a class="plus" onclick="plusBtn(this)" href="javascript:void(0);">+</a>
+    </div>
+</body>
+<script>
+    //减按钮点击事件 添加class一个“minus”
+    function minusBtn(ele){
+        var _this = $(ele);
+        var _val = _this.parent().children('.inputValue');
+
+        var currentValue = parseInt($.trim(_val.val()));
+        if(!isNaN(currentValue)){
+            if(currentValue > 1){
+                currentValue -= 1;
+                _val.val(currentValue);
+            }else{
+                return;
+            }
+        }else{
+            alert('只能填写填写数字');
+        }
+    }
+
+    //加按钮事件 添加class一个“plus”
+    function plusBtn(ele){
+        var _this = $(ele);
+        var _val = _this.parent().children('.inputValue');
+
+        var currentValue = parseInt($.trim(_val.val()));
+        if(!isNaN(currentValue)){
+            currentValue += 1;
+            _val.val(currentValue);
+
+        }else{
+            alert('只能填写填写数字');
+        }
+    }
+
+
+    //input focus
+    function focusCheck(ele){
+        var _this = $(ele);
+
+        _this.keydown(function(event){
+            var key = event.keyCode;
+            if(key < 48 || key > 57){
+                if(key == 8){
+                    return true;
+                }else{
+                    return false;
+                }
+
+            }
+        });
+    }
+
+
+    //input blur
+    function blurCheck(ele){
+        var _this = $(ele);
+        var currentValue = parseInt($.trim(_this.val()));
+
+        if(currentValue == 0 || isNaN(currentValue) || currentValue == null || currentValue == ''){
+            _this.val(1);
+            return;
+        }
+    }
+</script>
+</html>
